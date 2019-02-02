@@ -1,5 +1,6 @@
 package cn.hutool.crypto.asymmetric;
 
+import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -48,11 +49,11 @@ public class Sign extends BaseAsymmetric<Sign> {
 	 * 私钥和公钥可以单独传入一个，如此则只能使用此钥匙来做签名或验证
 	 * 
 	 * @param algorithm {@link SignAlgorithm}
-	 * @param privateKeyBase64 私钥Base64
-	 * @param publicKeyBase64 公钥Base64
+	 * @param privateKeyStr 私钥Hex或Base64表示
+	 * @param publicKeyStr 公钥Hex或Base64表示
 	 */
-	public Sign(SignAlgorithm algorithm, String privateKeyBase64, String publicKeyBase64) {
-		this(algorithm.getValue(), Base64.decode(privateKeyBase64), Base64.decode(publicKeyBase64));
+	public Sign(SignAlgorithm algorithm, String privateKeyStr, String publicKeyStr) {
+		this(algorithm.getValue(), SecureUtil.decodeKey(privateKeyStr), SecureUtil.decodeKey(publicKeyStr));
 	}
 
 	/**
@@ -65,6 +66,17 @@ public class Sign extends BaseAsymmetric<Sign> {
 	 */
 	public Sign(SignAlgorithm algorithm, byte[] privateKey, byte[] publicKey) {
 		this(algorithm.getValue(), privateKey, publicKey);
+	}
+	
+	/**
+	 * 构造 私钥和公钥同时为空时生成一对新的私钥和公钥<br>
+	 * 私钥和公钥可以单独传入一个，如此则只能使用此钥匙来做签名或验证
+	 * 
+	 * @param algorithm {@link SignAlgorithm}
+	 * @param keyPair 密钥对（包括公钥和私钥）
+	 */
+	public Sign(SignAlgorithm algorithm, KeyPair keyPair) {
+		this(algorithm.getValue(), keyPair);
 	}
 
 	/**
@@ -107,6 +119,17 @@ public class Sign extends BaseAsymmetric<Sign> {
 				SecureUtil.generatePublicKey(algorithm, publicKey)//
 		);
 	}
+	
+	/**
+	 * 构造 私钥和公钥同时为空时生成一对新的私钥和公钥<br>
+	 * 私钥和公钥可以单独传入一个，如此则只能使用此钥匙来做签名或验证
+	 * 
+	 * @param algorithm 算法，见{@link SignAlgorithm}
+	 * @param keyPair 密钥对（包括公钥和私钥）
+	 */
+	public Sign(String algorithm, KeyPair keyPair) {
+		this(algorithm, keyPair.getPrivate(), keyPair.getPublic());
+	}
 
 	/**
 	 * 构造
@@ -122,7 +145,7 @@ public class Sign extends BaseAsymmetric<Sign> {
 		super(algorithm, privateKey, publicKey);
 	}
 	// ------------------------------------------------------------------ Constructor end
-
+	
 	/**
 	 * 初始化
 	 * 

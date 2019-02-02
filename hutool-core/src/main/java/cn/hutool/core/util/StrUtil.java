@@ -753,6 +753,26 @@ public class StrUtil {
 	}
 
 	/**
+	 * 检查指定字符串中是否只包含给定的字符
+	 * 
+	 * @param str 字符串
+	 * @param testChars 检查的字符
+	 * @return 字符串含有非检查的字符，返回false
+	 * @since 4.4.1
+	 */
+	public static boolean containsOnly(CharSequence str, char... testChars) {
+		if (false == isEmpty(str)) {
+			int len = str.length();
+			for (int i = 0; i < len; i++) {
+				if (false == ArrayUtil.contains(testChars, str.charAt(i))) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	/**
 	 * 给定字符串是否包含空白符（空白符包括空格、制表符、全角空格和不间断空格）<br>
 	 * 如果给定字符串为null或者""，则返回false
 	 * 
@@ -1125,6 +1145,10 @@ public class StrUtil {
 	 * @since 3.1.2
 	 */
 	public static String strip(CharSequence str, CharSequence prefixOrSuffix) {
+		if (equals(str, prefixOrSuffix)) {
+			// 对于去除相同字符的情况单独处理
+			return EMPTY;
+		}
 		return strip(str, prefixOrSuffix, prefixOrSuffix);
 	}
 
@@ -1141,6 +1165,7 @@ public class StrUtil {
 		if (isEmpty(str)) {
 			return str(str);
 		}
+
 		int from = 0;
 		int to = str.length();
 
@@ -1151,7 +1176,8 @@ public class StrUtil {
 		if (endWith(str2, suffix)) {
 			to -= suffix.length();
 		}
-		return str2.substring(from, to);
+
+		return str2.substring(Math.min(from, to), Math.max(from, to));
 	}
 
 	/**
@@ -1988,7 +2014,7 @@ public class StrUtil {
 		// 重复，直到达到指定长度
 		final char[] padding = new char[padLen];
 		for (int i = 0; i < padLen; i++) {
-			padding[i] = str.charAt(i % padLen);
+			padding[i] = str.charAt(i % strLen);
 		}
 		return new String(padding);
 	}
@@ -2763,9 +2789,9 @@ public class StrUtil {
 	 * 补充字符串以满足最小长度
 	 * 
 	 * <pre>
-	 * StrUtil.padAfter(null, *, *);//null
-	 * StrUtil.padAfter("1", 3, "ABC");//"AB1"
-	 * StrUtil.padAfter("123", 2, "ABC");//"12"
+	 * StrUtil.padPre(null, *, *);//null
+	 * StrUtil.padPre("1", 3, "ABC");//"AB1"
+	 * StrUtil.padPre("123", 2, "ABC");//"12"
 	 * </pre>
 	 * 
 	 * @param str 字符串
@@ -2784,7 +2810,7 @@ public class StrUtil {
 			return subPre(str, minLength);
 		}
 
-		return repeat(padStr, minLength - strLen).concat(str.toString());
+		return repeatByLength(padStr, minLength - strLen).concat(str.toString());
 	}
 
 	/**
@@ -2866,10 +2892,10 @@ public class StrUtil {
 		if (strLen == minLength) {
 			return str.toString();
 		} else if (strLen > minLength) {
-			return subSuf(str, minLength);
+			return subSufByLength(str, minLength);
 		}
 
-		return str.toString().concat(repeat(padStr, minLength - strLen));
+		return str.toString().concat(repeatByLength(padStr, minLength - strLen));
 	}
 
 	/**
@@ -3352,7 +3378,7 @@ public class StrUtil {
 	}
 
 	/**
-	 * 指定范围内反向查找字符串
+	 * 指定范围内查找字符串
 	 * 
 	 * @param str 字符串
 	 * @param searchStr 需要查找位置的字符串

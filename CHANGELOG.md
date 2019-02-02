@@ -3,6 +3,103 @@
 
 -------------------------------------------------------------------------------------------------------------
 
+## 4.4.4
+
+### 新特性
+* 【crypto】     增加EC公钥压缩/解压缩（pr#264@Github）
+* 【db】          Entity支持IS NOT NULL形式，调整逻辑，强化Condition的toString（issue#267@Github）
+
+### Bug修复
+* 【core】        修复Profile中路径参数失效问题（issue#265@Github）
+* 【core】        修复Profile中路径参数失效问题
+* 【core】        修复MapConvert中值类型转换错误的问题（issue#268@Github）
+
+-------------------------------------------------------------------------------------------------------------
+
+## 4.4.3
+
+### 新特性
+* 【crypto】     MD5以及Digester增加加盐支持（issue#256@Github）
+* 【crypto】     整理KeyUtil，减少冗余代码
+* 【core】        增加Zodiac类，DateUtil增加getZodiac、getChineseZodiac用于获取星座和生肖（issue#260@Github）
+
+### Bug修复
+* 【core】        修复ExceptionUtil.stacktraceToString中limit参数无效问题（issue#IR7UE@Gitee）
+* 【core】        修复StrUtil.repeatByLength中数组越界问题（issue#IRB2C@Gitee）
+* 【core】        修复FileUtil.remove移动后删除失败问题（issue#IRF8R@Gitee）
+* 【extra】       修复Ftp中delDir逻辑导致的问题（issue#IRCQ8@Gitee）
+* 【core】        修复XmlUtil.mapToXml中map值为空导致的空指针问题。（issue#IRD7X@Gitee）
+* 【poi】          修复ExcelWriter中setOnlyAlias没有排除值的问题。（issue#IRF9L@Gitee）
+
+-------------------------------------------------------------------------------------------------------------
+
+## 4.4.2
+
+### 新特性
+* 【core】        JSON中添加getStrEscaped方法，并修改原getStr逻辑，不再自动转义（issue#IR7SW@Gitee）
+* 【core】        CLassLoaderUtil增加getJarClassLoader和loadClass重载方法（issue#IR94T@Gitee）
+* 【crypto】     SM2密钥生成曲线修改为使用sm2p256v1（pr#249@Github）
+* 【json】         JSONUtil增加空判断（issue#253@Github）
+* 【core】        改进HexUtil.isHexNumber（issue#254@Github）
+* 【http】        HttpRequest增加getConnection方法（issue#251@Github）
+
+### Bug修复
+* 【core】        修复URL转义问题（issue#IR6QP@Gitee）
+* 【core】        修复WeightRandom权重为0的对象问题（issue#252@Github）
+
+-------------------------------------------------------------------------------------------------------------
+
+## 4.4.1
+
+### 新特性
+* 【core】        增加Rot（回转N位简易替换密码）、凯撒密码和莫尔斯电码
+* 【crypto】     增加Vigenere密码
+* 【db】          增加达梦7的驱动识别
+* 【extra】       TemplateEngine适配更广泛的参数类型
+* 【core】       HexUtil增加toHex方法，增加CRC8和CRC16（issue#IQWNB@Gitee）
+* 【http】        添加text/xml ContentType（pr#31@Gitee）
+* 【core】        Img、ImageUtil增加Resource和Path参数支持
+* 【extra】       ServletUtil.getClientIP增加注释，提示IP伪造风险
+* 【poi】          增加Word07Writer
+* 【crypto】     增加KeyUtil，SecureUtil中的密钥生成迁移至此工具类中
+* 【core】        增加URLEncoder（自行实现解决空格转义问题），HttpUtil废弃encode和decode方法
+
+### Bug修复
+* 【poi】          解决ExcelWriter中setSheet报错问题（issue#235@Github）
+* 【crypto】     解决SecureUtil.readCertificate密码无效问题（issue#240@Github）
+* 【json】        修复JSONUtil.toList针对对象中的类无法实例化导致的null问题（issue#239@Github）
+* 【db】          修复MongoDS在Single模式下检查配置文件导致的问题（issue#IR2BF@Github）
+
+-------------------------------------------------------------------------------------------------------------
+
+## 4.4.0
+
+### 新特性
+* 【core】        增加MurmurHash（Murmur3算法实现），HashUtil增加murmur32、murmur64、murmur128方法
+* 【core】        增加Simhash（用于海量文本去重）
+* 【extra】        增加分词封装，封装了ansj、HanLP、IKAnalyzer、Jcseg、Jieba、MMSeg、Lucene-analysis、Word的实现，统一了接口
+* 【core】        去除NumberUtil.parseInt和parseLong的8进制支持（issue#234@Github）
+* 【extra】        Template部分修改命名减少歧义（Engine->TemplateEngine，EngineFactory->TemplateFactory）
+* 【poi】          ExcelWriter中Map支持alias（issue#IQISU@Gitee）
+
+### Bug修复
+
+## 4.3.3
+
+### 新特性
+* 【poi】          ExcelWriter增加write重载，可选强制加标题（感谢@【北京】大熊）
+* 【core】        ExceptionUtil增加isFromOrSuppressedThrowable（pr#29@Gitee）
+* 【core】        ExceptionUtil增加convertFromOrSuppressedThrowable（pr#30@Gitee）
+* 【crypto】     非对称和SM2构造传入的私钥和公钥支持Hex和Base64自动识别
+
+### Bug修复
+* 【core】        修复padAfter和padPre结果错误问题（issue#IQANO@Gitee）
+* 【crypto】     修复SM2签名验证异常（issue#IQAY0@Gitee）
+* 【extra】       修复Freemarker字符串模板无效问题（issue#231@Github）
+* 【core】        修复StrUtil.strip问题（issue#232@Github）
+
+-------------------------------------------------------------------------------------------------------------
+
 ## 4.3.2
 
 ### 新特性
